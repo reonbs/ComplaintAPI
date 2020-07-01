@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Bankly.Complaint.Respository;
 using Bankly.Complaint.Respository.IRepository;
 using Bankly.Complaint.Respository.Repository;
 using Bankly.Complaint.Service.Interfaces;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -29,6 +31,10 @@ namespace Bankly.Complaint.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
+
             services.AddTransient<IResponseService, ResponseService>();
             services.AddScoped<IComplaintRepository, ComplaintRepository>();
             services.AddTransient<IComplaintService, ComplaintService>();
