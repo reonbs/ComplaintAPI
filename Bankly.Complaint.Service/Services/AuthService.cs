@@ -11,7 +11,7 @@ namespace Bankly.Complaint.Service.Services
 {
     public interface IAuthService
     {
-        Task<ExecutionResponse<IDServerResponseDto>> Login(LoginReqDto loginReqDto)
+        Task<ExecutionResponse<IDServerResponseDto>> Login(LoginReqDto loginReqDto);
     }
 
     public class AuthService : IAuthService
