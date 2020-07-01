@@ -38,14 +38,6 @@ namespace Bankly.Complaint.Api
         public void ConfigureServices(IServiceCollection services)
         {
 
-            //services.AddAuthentication("Bearer")
-            //    .AddIdentityServerAuthentication(options =>
-            //    {
-            //        options.Authority = "https://localhost:5003";
-            //        options.RequireHttpsMetadata = false;
-            //        options.ApiName = "complianceapi";
-            //    });
-
             var appSettingsSection = Configuration.GetSection("AppSettings");
 
             services.Configure<AppSettings>(appSettingsSection);
@@ -56,8 +48,8 @@ namespace Bankly.Complaint.Api
                 opts.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(opts =>
             {
-                opts.Authority = "https://localhost:5003";
-                opts.RequireHttpsMetadata = true;
+                opts.Authority = appSettingsSection["IdentityUrl"];
+                opts.RequireHttpsMetadata = false;
                 opts.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateAudience = true,
@@ -69,8 +61,6 @@ namespace Bankly.Complaint.Api
                 };
             });
 
-
-
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
 
             services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
@@ -81,7 +71,6 @@ namespace Bankly.Complaint.Api
             services.AddTransient<IComplaintService, ComplaintService>();
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IAuthService, AuthService>();
-
 
             services.AddSwaggerGen(c =>
             {
@@ -103,7 +92,6 @@ namespace Bankly.Complaint.Api
             }
 
             app.UseHttpsRedirection();
-
 
 
             app.UseRouting();

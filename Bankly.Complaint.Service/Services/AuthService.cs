@@ -42,10 +42,11 @@ namespace Bankly.Complaint.Service.Services
                     Address = _appSettings.IdentityUrl + "/connect/token",
                     ClientId = _appSettings.ClientId,
                     ClientSecret = _appSettings.ClientSecret,
-                    Scope = $"{_appSettings.APIScope} profile openid",
+                    Scope = $"{_appSettings.APIScope} openid profile",
                     UserName = loginReqDto.UserName,
                     Password = loginReqDto.Password,
                     GrantType = "password"
+                    
                 };
 
                 var response = await client.RequestPasswordTokenAsync(passwordTokenRequest);

@@ -9,7 +9,8 @@ namespace Bankly.Complaint.Respository
         public AppDbContext CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<AppDbContext>();
-            builder.UseNpgsql(@"Server=localhost;Database=BanklyComplaintDb;Port=5432;User Id=reo;Password=habakuk2:2;");//
+            //you can change to you local , this runs online in design time
+            builder.UseNpgsql(@"Server=localhost;Database=BanklyComplaintDb;Port=5432;User Id=reo;Password=habakuk2:2;");
             return new AppDbContext(builder.Options);
         }
     }

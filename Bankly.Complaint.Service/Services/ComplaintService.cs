@@ -82,7 +82,7 @@ namespace Bankly.Complaint.Service.Services
                 return _responseService.ExecutionResponse<ProductComplaintDto>("complaint not found");
 
 
-            return _responseService.ExecutionResponse<ProductComplaintDto>("complaint status updated successfully", ProductComplaintMapping.GetDto(productComplaint), true);
+            return _responseService.ExecutionResponse<ProductComplaintDto>("complaint retreived successfully", ProductComplaintMapping.GetDto(productComplaint), true);
         }
 
         public ExecutionResponse<List<ProductComplaintDto>> GetComplaints(int pageNumber = 1, int pageSize = 10)
@@ -92,7 +92,7 @@ namespace Bankly.Complaint.Service.Services
             var pagedProductComplaints = productComplaints.Skip((pageNumber - 1) * pageSize).Take(pageSize);
 
             return _responseService
-                .ExecutionResponse<List<ProductComplaintDto>>("complaint status updated successfully",
+                .ExecutionResponse<List<ProductComplaintDto>>("complaint retreived successfully",
                 pagedProductComplaints.Select(ProductComplaintMapping.GetDto).ToList(), true);
         }
     }
