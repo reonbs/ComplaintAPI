@@ -21,6 +21,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace Bankly.Complaint.Api
 {
@@ -81,8 +82,15 @@ namespace Bankly.Complaint.Api
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IAuthService, AuthService>();
 
-           
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Bankly Compliant API", Version = "v1" });
+            });
+
             services.AddControllers();
+
+
             services.AddMvcCore().AddAuthorization();
         }
 
@@ -96,7 +104,16 @@ namespace Bankly.Complaint.Api
 
             app.UseHttpsRedirection();
 
+
+
             app.UseRouting();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Bankly Compliant API");
+            });
 
             app.UseAuthentication();
             app.UseAuthorization();
