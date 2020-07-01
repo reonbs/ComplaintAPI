@@ -2,10 +2,13 @@
 using System.Threading.Tasks;
 using Bankly.Complaint.Service.Dto;
 using Bankly.Complaint.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bankly.Complaint.Api.Controllers
 {
+    [Authorize]
+    [Route("/api/[controller]")]
     public class ComplaintController:ControllerBase
     {
         private readonly IComplaintService _complaintService;
